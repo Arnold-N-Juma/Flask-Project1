@@ -27,7 +27,7 @@ class RestaurantPizza(db.Model):
     restaurant = db.relationship('Restaurant', back_populates='restaurant_pizzas')
     pizza = db.relationship('Pizza', back_populates='restaurant_pizzas')
 
-@db.event.listens_for(RestaurantPizza.price, 'set', retval=True)
-def validate_price(target, value, oldvalue, initiator):
-    if not (1 <= value <= 30):
+@db.event.listens_for(RestaurantPizza, 'before_insert')
+def validate_price(mapper, connection, target):
+    if target.price is not None and not(1 <= target.price<= 30):
         raise ValueError("Price must be between 1 and 30")

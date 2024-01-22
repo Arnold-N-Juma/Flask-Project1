@@ -72,8 +72,6 @@ pizza_ingredients = [
     "Jalapeños"
 ]
 
-pizza_prices = [8.99, 9.99, 10.49, 11.99, 12.99, 13.49, 14.99, 15.49, 16.99, 17.49, 18.99, 19.49, 20.99, 21.49, 22.99, 23.49, 24.99, 25.49, 26.99, 27.49, 28.99]
-
 with app.app_context():
 
     Restaurant.query.delete()
@@ -98,19 +96,20 @@ with app.app_context():
         db.session.add(pizza)
         db.session.commit()
 
-    restaurant_pizzas = []
+    restaurantpizzas = []
     for i in range(50):
-      pizza = random.choice(pizzas)
-      restaurant = random.choice(restaurants)
+        pizza = random.choice(pizzas)
+        restaurant = random.choice(restaurants)
+        price = random.randint(1, 30)
 
-      restaurant_pizza = RestaurantPizza(
-        price = random.randint(1, 30),
+        restaurant_pizza = RestaurantPizza(
+        price = price,
         restaurant_id=restaurant.id,
         pizza_id=pizza.id
-     )
+                   )
 
-      restaurant_pizzas.append(restaurant_pizza)
-      db.session.add(restaurant_pizza)
+        restaurantpizzas.append(restaurant_pizza)
+        db.session.add(restaurant_pizza)
 
-      db.session.commit()
+    db.session.commit()
 
